@@ -1,0 +1,21 @@
+{
+  "name": "bus_search_service",
+  "version": "1.0.0",
+  "description": "A microservice that is able to do crud operations on bus and also able to search the buses in the searched routes ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx nodemon src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mysql2": "^3.0.1",
+    "nodemon": "^2.0.20",
+    "sequelize": "^6.28.0",
+    "sequelize-cli": "^6.5.2"
+  }
+}
