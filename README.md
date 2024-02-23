@@ -47,13 +47,9 @@ execute
     "BusType": "String",
     "TotalSeats": "Integer",
     "Operator": "String",
-    "DepartureCity": "String",
-    "ArrivalCity": "String",
-    "DepartureTime": "DateTime",
-    "ArrivalTime": "DateTime"
   }
 }
-
+ 
 ```
 ### BusTrips
 
@@ -63,7 +59,12 @@ execute
     "attributes": {
       "TripID": "Primary Key",
       "BusID": "Foreign Key referencing Bus",
-      "DepartureDate": "Date",
+      "DepartureStationID": "Foreign Key referencing BusStation",
+      "ArrivalStationID": "Foreign Key referencing BusStation", 
+      "DepartureCityId": "Foreign Key referencing City",
+      "ArrivalCityId": "Foreign Key referencing City",
+      "DepartureDateTime": "Date",
+      "ArrivalDateTime": "Date",
       "AvailableSeats": "Integer",
       "TicketPrice": "Float",
       "Status": "String (e.g., Active, Inactive)"
@@ -79,9 +80,8 @@ execute
     "attributes": {
       "StationID": "Primary Key",
       "StationName": "String",
-      "City": "String",
-      "Latitude": "Float",
-      "Longitude": "Float"
+      "CityID": "Foreign Key referencing City",
+      "Address": "String",
     }
   },
 
@@ -97,41 +97,7 @@ execute
       "CityName": "String"
     }
   }
-}
 
 ```
 
 ### ER Diagram 
-
-```
-
-+---------------------+       1       +---------------------+
-|        Bus          | ------------|      BusTrips       |
-+---------------------+              +---------------------+
-| BusID (PK)          |              | TripID (PK)         |
-| BusName             |              | BusID (FK)          |
-| BusType             |       1      | DepartureDate       |
-| TotalSeats          | <------------| AvailableSeats      |
-| Operator            |              | TicketPrice         |
-| DepartureCity       |              | Status              |
-| ArrivalCity         |              +---------------------+
-| DepartureTime       |
-| ArrivalTime         |
-+---------------------+
-
-          |
-         1|
-          |
-          V
-
-+---------------------+       M       +---------------------+
-|     BusStation      | ------------|        City         |
-+---------------------+              +---------------------+
-| StationID (PK)      |              | CityID (PK)         |
-| StationName         |              | CityName            |
-| City                |       1      +---------------------+
-| Latitude            |
-| Longitude           |
-+---------------------+
-
-```
