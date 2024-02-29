@@ -8,7 +8,7 @@ class CityRepository {
       const city = await City.create({
         name: cityName.name,
       });
-      return city;
+      return city;//return a city object which is created with the property name .
     } catch (error) {
       // Log an error message
       console.log(
@@ -21,11 +21,15 @@ class CityRepository {
   // Delete a city by ID
   async deleteCity(cityId) {
     try {
-      await City.destroy({
+      const result = await City.destroy({
         where: {
           id: cityId,
         },
       });
+      if(result==0){
+        console.log("City not found for deletion");
+        return false;
+      }
       return true;
     } catch (error) {
       // Log an error message
