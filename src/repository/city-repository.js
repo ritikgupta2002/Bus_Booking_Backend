@@ -44,7 +44,7 @@ class CityRepository {
   async updateCity(cityId, data) {
     try {
       const city = await City.findByPk(cityId);
-
+      // console.log(city);
       if (!city) {
         throw new Error("City not found");
       }
@@ -54,7 +54,6 @@ class CityRepository {
         city.name = data.name;
         await city.save();
       }
-
       return city;
     } catch (error) {
       // Log an error message
