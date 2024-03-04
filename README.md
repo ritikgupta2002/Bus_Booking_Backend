@@ -101,3 +101,75 @@ execute
 ```
 
 ### ER Diagram 
+
+```
+          +-------------+
+          |    City     |
+          +-------------+
+                |
+                | (one-to-many)
+                |
+          +-------------+
+          | BusStation  |
+          +-------------+
+                |
+                | (one-to-many)
+                |
+          +-------------+
+          |    Bus      |
+          +-------------+
+                |
+                | (many-to-one)
+                |
+          +-------------+
+          |  BusTrip    |
+          +-------------+
+                |
+                | (many-to-one)
+                |
+          +-------------+
+          |  City (FK)  |  (references departure city)
+                |
+                | (many-to-one)
+                |
+          +-------------+
+          | BusStation  |  (references departure station)
+                |
+                | (many-to-one)
+                |
+          +-------------+
+          |    Bus      |  (references bus for the trip)
+                |
+                | (many-to-one)
+                |
+          +-------------+
+          |   City (FK) |  (references arrival city)
+                |
+                | (many-to-one)
+                |
+          +-------------+
+          | BusStation  |  (references arrival station)
+                |
+                | (many-to-one)
+                |
+          +-------------+
+
+
+```
+
+
+## Model Relationships:
+
+1. Each `City` can have multiple `BusStations` (one-to-many relationship).
+2. Each `BusStation` can have multiple `Buses` (one-to-many relationship).
+3. Each `Bus` can have multiple `BusTrips` (one-to-many relationship).
+4. Each `BusTrip` has a departure `City` (many-to-one relationship).
+5. Each `BusTrip` has a departure `BusStation` (many-to-one relationship).
+6. Each `BusTrip` references a specific `Bus` (many-to-one relationship).
+7. Each `BusTrip` has an arrival `City` (many-to-one relationship).
+8. Each `BusTrip` has an arrival `BusStation` (many-to-one relationship).
+
+
+
+
+
