@@ -98,7 +98,8 @@ execute
     }
   }
 
-![Databasedesign](src/databasedesign.png)
+![databasedesign](https://github.com/ritikgupta2002/Bus_Search_Service/assets/99651822/d768166b-617c-4ae8-86e3-7a364d188e09)
+
 
 ## Model Relationships:
 
