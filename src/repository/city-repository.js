@@ -109,6 +109,9 @@ class CityRepository {
       throw new Error("Failed to get cities");
     }
   }
+
+  
+
 }
 
 module.exports = CityRepository;

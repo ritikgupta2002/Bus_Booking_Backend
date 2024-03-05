@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   Bus.init(
     {
-      busName: { type: DataTypes.STRING, allowNull: false },
-      busType: DataTypes.STRING,
+      name: { type: DataTypes.STRING, allowNull: false },
+      type: DataTypes.STRING,
       totalSeats: { type: DataTypes.INTEGER, allowNull: false },
       operator: { type: DataTypes.STRING, allowNull: false },
     },

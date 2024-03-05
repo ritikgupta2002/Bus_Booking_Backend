@@ -98,7 +98,8 @@ execute
     }
   }
 
-![databasedesign](https://github.com/ritikgupta2002/Bus_Search_Service/assets/99651822/d768166b-617c-4ae8-86e3-7a364d188e09)
+```
+![databasedesign](https://github.com/ritikgupta2002/Bus_Search_Service/assets/99651822/9463c8b9-e1b3-4df9-93ad-f3763a48bc55)
 
 
 ## Model Relationships:

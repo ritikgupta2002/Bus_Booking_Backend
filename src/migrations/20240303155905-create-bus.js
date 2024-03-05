@@ -9,16 +9,17 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      busName: {
+      name: {
         type: Sequelize.STRING
       },
-      busType: {
-        type: Sequelize.STRING
+      type: {
+        type: Sequelize.ENUM("AC", "Regular","Sleeper","Deluxe"),
+        defaultValue: "Regular",
       },
       totalSeats: {
         type: Sequelize.INTEGER
       },
-      Operator: {
+      operator: {
         type: Sequelize.STRING
       },
       createdAt: {
