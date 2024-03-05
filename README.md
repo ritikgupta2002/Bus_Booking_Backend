@@ -98,65 +98,7 @@ execute
     }
   }
 
-```
-
-### ER Diagram 
-
-```
-          +-------------+
-          |    City     |
-          +-------------+
-                |
-                | (one-to-many)
-                |
-          +-------------+
-          | BusStation  |
-          +-------------+
-                |
-                | (one-to-many)
-                |
-          +-------------+
-          |    Bus      |
-          +-------------+
-                |
-                | (many-to-one)
-                |
-          +-------------+
-          |  BusTrip    |
-          +-------------+
-                |
-                | (many-to-one)
-                |
-          +-------------+
-          |  City (FK)  |  (references departure city)
-                |
-                | (many-to-one)
-                |
-          +-------------+
-          | BusStation  |  (references departure station)
-                |
-                | (many-to-one)
-                |
-          +-------------+
-          |    Bus      |  (references bus for the trip)
-                |
-                | (many-to-one)
-                |
-          +-------------+
-          |   City (FK) |  (references arrival city)
-                |
-                | (many-to-one)
-                |
-          +-------------+
-          | BusStation  |  (references arrival station)
-                |
-                | (many-to-one)
-                |
-          +-------------+
-
-
-```
-
+![Databasedesign](src/databasedesign.png)
 
 ## Model Relationships:
 
