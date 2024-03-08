@@ -63,6 +63,40 @@ class BusRepository {
     }
   }
 
+  async getBus(busId) {
+    try {
+      const bus = await Bus.findByPk(busId);
+      if (!bus) {
+        throw new Error("Bus not found");
+      }
+      return bus;
+    } catch (error) {
+      // Log an error message
+      console.log(
+        "something went wrong in the repository layer while getting bus "
+      );
+      throw new Error("Failed to get bus");
+    }
+  }
+  async getBusesByBusStation(busStationId) {
+    try {
+      const buses = await Bus.findAll({
+        where: {
+          busStationId: busStationId,
+        },
+      });
+      if (!buses || buses.length === 0) {
+        throw new Error("No buses found for the specified busStationId");
+    }
+      return buses;
+    } catch (error) {
+       // Log an error message
+      console.log(
+        "something went wrong in the repository layer while getting buses by busStationId "
+      );
+      throw new Error("Failed to get buses by busStationId");
+    }
+  }
 }
 
 module.exports = BusRepository;

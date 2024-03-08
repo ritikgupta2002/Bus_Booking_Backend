@@ -22,6 +22,16 @@ module.exports = {
       operator: {
         type: Sequelize.STRING
       },
+      stationId: {
+       type:Sequelize.INTEGER,
+       references:{
+        model: 'BusStations',
+        key: 'id',
+        as:'stationId',
+       },
+       onDelete: 'CASCADE',
+       allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
