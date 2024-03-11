@@ -1,4 +1,5 @@
 const { Bus } = require("../models/index.js");
+const { BusTrip } = require("./models/busTrip");
 const { Op } = require("sequelize");
 
 class BusRepository {
@@ -10,6 +11,7 @@ class BusRepository {
         type: busData.type,
         totalSeats: busData.totalSeats,
         operator: busData.operator,
+        stationId: busData.stationId,
       });
       return bus;
     } catch (error) {
@@ -50,8 +52,19 @@ class BusRepository {
       if (!bus) {
         throw new Error("Bus not found");
       }
-      if (data.name) {
+      if (
+        data.name ||
+        data.type ||
+        data.totalSeats ||
+        data.operator ||
+        bus.stationId
+      ) {
         bus.name = data.name;
+        bus.type = data.type;
+        bus.totalSeats = data.totalSeats;
+        bus.operator = data.operator;
+        bus.stationId = data.stationId;
+        await bus.save();
       }
       return bus;
     } catch (error) {
@@ -87,16 +100,51 @@ class BusRepository {
       });
       if (!buses || buses.length === 0) {
         throw new Error("No buses found for the specified busStationId");
-    }
+      }
       return buses;
     } catch (error) {
-       // Log an error message
+      // Log an error message
       console.log(
         "something went wrong in the repository layer while getting buses by busStationId "
       );
       throw new Error("Failed to get buses by busStationId");
     }
   }
+  async getBusesByType(BusType) {
+    try {
+      const buses = await Bus.findAll({
+        where: {
+          type: BusType,
+        },
+      });
+      if (!buses || buses.length === 0) {
+        throw new Error("No buses found for the specified bus type");
+      }
+      return buses;
+    } catch (error) {
+      // Log an error message
+      console.log(
+        "something went wrong in the repository layer while getting buses by bus type "
+      );
+      throw new Error("Failed to get buses by bus type");
+    }
+  }
+  // this function will be usefull when there will be many to many relationship between bustrips and bus model
+  // async getAllBusesForBusTrip(busTripId) {
+  //    try {
+  //     const busTrip=await BusTrip.findByPk(busTripId,{
+  //       include:'buses'//including the associated model
+  //     });
+  //     if (!busTrip) {
+  //       throw new Error('BusTrip not found');
+  //     }
+  //     const buses= busTrip.buses;
+  //     return buses;
+
+  //    } catch (error) {
+
+  //    }
+  // }
 }
 
 module.exports = BusRepository;

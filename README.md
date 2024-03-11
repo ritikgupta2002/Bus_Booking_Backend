@@ -47,6 +47,7 @@ execute
     "BusType": "String",
     "TotalSeats": "Integer",
     "Operator": "String",
+    "stationId":"Integer",
   }
 }
  
@@ -99,7 +100,7 @@ execute
   }
 
 ```
-![db diagram](https://github.com/ritikgupta2002/Bus_Search_Service/assets/99651822/9b4ca99a-61e8-42a6-8791-fe909e486c7f)
+![db diagram](https://github.com/ritikgupta2002/Bus_Search_Service/assets/99651822/5111f2a6-3285-4307-987b-db2c6c661e75)
 
 
 ## Model Relationships:

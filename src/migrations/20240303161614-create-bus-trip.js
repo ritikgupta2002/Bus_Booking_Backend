@@ -51,13 +51,11 @@ module.exports = {
       },
       departureDateTime: {
         type: Sequelize.DATE,
-        allowNull: false,
       },
       arrivalDateTime: {
         type: Sequelize.DATE,
-        allowNull: false,
       },
-      arrivalSeats: {
+      availableSeats: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
@@ -66,8 +64,8 @@ module.exports = {
         allowNull: false,
       },
       status: {
-        type: Sequelize.ENUM("Active", "Inactive"),
-        defaultValue: "Active",
+        type: Sequelize.ENUM("Active", "Inactive","No Information"),
+        defaultValue: "No Information",
       },
       createdAt: {
         allowNull: false,

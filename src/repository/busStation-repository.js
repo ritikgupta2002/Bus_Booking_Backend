@@ -50,8 +50,11 @@ class BusStationRepository {
       if (!busStation) {
         throw new Error("Bus station not found");
       }
-      if (data.name) {
+      if (data.name||data.address||data.cityId) {
         busStation.name = data.name;
+        busStation.address = data.address;
+        busStation.cityId = data.cityId;
+        await busStation.save();
       }
       return busStation;
     } catch (error) {
@@ -125,10 +128,6 @@ class BusStationRepository {
   }
 
   
-
-
-  
-
 }
 
 
