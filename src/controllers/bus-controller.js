@@ -5,6 +5,7 @@ const busService = new BusService();
 
 const create = async (req, res) => {
   try {
+    // console.log(req.body);
     const bus = await busService.createBus(req.body);
     return res.status(statusCodes.CREATED).json({
       data: bus,
@@ -25,6 +26,16 @@ const create = async (req, res) => {
 const destroy = async (req, res) => {
   try {
     const response = await busService.deleteBus(req.params.id);
+
+    if (response === false) {
+      return res.status(statusCodes.NOT_FOUND).json({
+        data: {},
+        success: false,
+        message: "Bus not found for deletion",
+        err: {},
+      });
+    }
+
     return res.status(statusCodes.OK).json({
       data: response,
       success: true,
@@ -66,7 +77,7 @@ const get = async (req, res) => {
     return res.status(statusCodes.OK).json({
       data: bus,
       success: true,
-      message: "Successfully fetched bus by id "  ,
+      message: "Successfully fetched bus by id ",
       err: {},
     });
   } catch (error) {
@@ -80,7 +91,8 @@ const get = async (req, res) => {
 
 const getBusesByBusStation = async (req, res) => {
   try {
-    const buses = await busService.getBusesByBusStation(req.params.id);
+    console.log(req.params.stationId);
+    const buses = await busService.getBusesByBusStation(req.params.stationId);
     return res.status(statusCodes.OK).json({
       data: buses,
       success: true,
@@ -96,22 +108,47 @@ const getBusesByBusStation = async (req, res) => {
   }
 };
 
-const getBusesByType=async(req,res)=>{
+const getBusesByType = async (req, res) => {
   try {
-    const buses= await busService.getBusesByType(req.body);
+    console.log(req.query.type);
+    const buses = await busService.getBusesByType(req.query.type);
     return res.status(statusCodes.OK).json({
       data: buses,
       success: true,
-      message: "Successfully fetched buses by bus type" ,
-      err: {},  
-    })
+      message: "Successfully fetched buses by bus type",
+      err: {},
+    });
   } catch (error) {
-    console.log("something went wrong in the service layer while fetching buses by bus type ");
+    console.log(
+      "something went wrong in the service layer while fetching buses by bus type "
+    );
     throw new Error("Failed to fetch buses by bus type");
   }
-}
+};
 
-
+const getAll = async (req, res) => {
+  try {
+    const filter = {
+      name: req.query.name,
+      type: req.query.type,
+      operator: req.query.operator,
+      stationId: req.query.stationId,
+      // Add more allowed parameters as needed
+    };
+    const buses = await busService.getAllBuses(filter);
+    return res.status(statusCodes.OK).json({
+      data: buses,
+      success: true,
+      message: "Successfully fetched all buses with given filter",
+      err: {},
+    });
+  } catch (error) {
+    console.log(
+      "something went wrong in the service layer while fetching all buses with given filter"
+    );
+    throw new Error("Failed to fetch all buses with given filter");
+  }
+};
 
 module.exports = {
   create,
@@ -119,5 +156,6 @@ module.exports = {
   update,
   get,
   getBusesByBusStation,
-  getBusesByType
+  getBusesByType,
+  getAll,
 };

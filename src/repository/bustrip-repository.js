@@ -5,16 +5,18 @@ const { Op } = require("sequelize");
 class BusTripRepository {
   async createBusTrip(busTripData) {
     try {
+      console.log(busTripData);
       const busTrip = await BusTrip.create({
         busId: busTripData.busId,
         departureStationId: busTripData.departureStationId,
         arrivalStationId: busTripData.arrivalStationId,
         departureCityId: busTripData.departureCityId,
         arrivalCityId: busTripData.arrivalCityId,
-        departureTime: busTripData.departureTime,
-        arrivalTime: busTripData.arrivalTime,
+        departureDateTime: busTripData.departureDateTime,
+        arrivalDateTime: busTripData.arrivalDateTime,
+        availableSeats: busTripData.availableSeats,
         ticketPrice: busTripData.ticketPrice,
-        tripStatus: busTripData.tripStatus,
+        status: busTripData.status,
       });
       return busTrip;
     } catch (error) {
@@ -33,7 +35,7 @@ class BusTripRepository {
           id: busTripId,
         },
       });
-      if (result == 0) {
+      if (result===0) {
         console.log("Bus trip not found for deletion");
         return false;
       }
@@ -55,22 +57,32 @@ class BusTripRepository {
         throw new Error("Bus trip not found");
       }
 
+      if (!data || Object.keys(data).length === 0) {
+        throw new Error("No data provided for updating bus trip");
+      }
+
       if (
         data.departureStationId ||
         data.arrivalStationId ||
         data.ticketPrice ||
-        data.tripStatus
+        data.status||
+        data.availableSeats||
+        data.departureDateTime||
+        data.arrivalDateTime
       ) {
-        busTrip.departureStationId = data.departureStationId;
-        busTrip.arrivalStationId = data.arrivalStationId;
-        busTrip.ticketPrice = data.ticketPrice;
-        busTrip.tripStatus = data.tripStatus;
+        if (data.departureStationId) busTrip.departureStationId = data.departureStationId;
+        if (data.arrivalStationId) busTrip.arrivalStationId = data.arrivalStationId;
+        if (data.ticketPrice) busTrip.ticketPrice = data.ticketPrice;
+        if (data.status) busTrip.status = data.status;
+        if (data.availableSeats) busTrip.availableSeats = data.availableSeats;
+        if (data.departureDateTime) busTrip.departureDateTime = data.departureDateTime;
+        if (data.arrivalDateTime) busTrip.arrivalDateTime = data.arrivalDateTime;
         await busTrip.save();
       }
     } catch (error) {
       // Log an error message
       console.log(
-        "something went wrong in the repository layer while updating bus trip "
+        "something went wrong in the repository layer while updating bus trip ",error.message
       );
       throw new Error("Failed to update bus trip");
     }
@@ -99,8 +111,7 @@ class BusTripRepository {
     try {
       const busTrip = await BusTrip.findByPk(busTripId);
       if (!busTrip) {
-        console.log("Bus trip not found for the given id");
-        return false;
+        throw new Error("Bus trip not found");
       }
       return busTrip;
     } catch (error) {
@@ -113,6 +124,7 @@ class BusTripRepository {
   }
   async getBusTripsByBusId(busId) {
     try {
+      console.log(busId);
       const busTrips = await BusTrip.findAll({
         where: {
           busId: busId,
@@ -140,17 +152,18 @@ class BusTripRepository {
           departureCityId:departureCityId,
           arrivalCityId:arrivalCityId,
         },
-        include: [{
-            model: Bus,
-            attributes: ['id', 'name', 'type', 'totalSeats', 'operator'],
-          }],
+        // include: [{
+        //     model: Bus,
+        //     attributes: ['id', 'name', 'type', 'totalSeats', 'operator'],
+        //   }],
       });
       if (bustrips.length == 0) {
         console.log("No bus trips found for the given departure and arrival city id");
         return false;
       }
-      return bustrips;
-    } catch ({ error }) {
+      const tripsCount=bustrips.length;
+      return {bustrips,tripsCount};
+    } catch (error) {
         // Log an error message
         console.log(
           "something went wrong in the repository layer while getting bus trips by departure and arrival city id "

@@ -1,12 +1,13 @@
 const { BusRepository } = require("../repository/index.js");
 
 class BusService {
-  contructor() {
+  constructor() {
     this.busRepository = new BusRepository();
   }
 
   async createBus(busData) {
     try {
+      // console.log(busData);
       const bus = await this.busRepository.createBus(busData);
       return bus;
     } catch (error) {
@@ -59,6 +60,7 @@ class BusService {
 
   async getBusesByBusStation(busStationId) {
     try {
+      console.log(busStationId);
       const buses = await this.busRepository.getBusesByBusStation(busStationId);
       return buses;
     } catch (error) {
@@ -72,6 +74,7 @@ class BusService {
 
   async getBusesByType(BusType) {
     try {
+      console.log(BusType);
       const buses = await this.busRepository.getBusesByType(BusType);
       return buses;
     } catch (error) {
@@ -80,6 +83,19 @@ class BusService {
         "something went wrong in the service layer while getting buses by bus type "
       );
       throw new Error("Failed to get buses by bus type");
+    }
+  }
+
+  async getAllBuses(filter) {
+    try {
+      const buses = await this.busRepository.getAllBuses(filter);
+      return buses;
+    } catch (error) {
+      // Log an error message
+      console.log(
+        "something went wrong in the service layer while getting all buses"
+      );
+      throw new Error("Failed to get all buses");
     }
   }
 }

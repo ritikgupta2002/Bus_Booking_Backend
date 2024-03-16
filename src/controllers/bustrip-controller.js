@@ -5,6 +5,7 @@ const busTripService = new BusTripService();
 
 const create = async (req, res) => {
   try {
+    // console.log(req.body);
     const busTrip = await busTripService.createBusTrip(req.body);
     return res.status(statusCodes.CREATED).json({
       data: busTrip,
@@ -25,7 +26,15 @@ const create = async (req, res) => {
 const destroy = async (req, res) => {
   try {
     const response = await busTripService.deleteBusTrip(req.params.id);
-    return res.status(statusCodes.Ok).json({
+    if (response === false) {
+      return res.status(statusCodes.NOT_FOUND).json({
+        data: {},
+        success: false,
+        message: "Bus trip not found for deletion",
+        err: {},
+      });
+    }
+    return res.status(statusCodes.OK).json({
       data: response,
       success: true,
       message: "Successfully deleted bus trip",
@@ -85,8 +94,8 @@ const getAll = async (req, res) => {
 
 const getBusTripsById = async (req, res) => {
   try {
-    const busTrips = await BusTripService.getBusTripsById(req.params.id);
-    return res.status(statius.OK).json({
+    const busTrips = await busTripService.getBusTripsById(req.params.id);
+    return res.status(statusCodes.OK).json({
       data: busTrips,
       success: true,
       message: "Successfully fetched bus trips with the given bus id",
@@ -104,7 +113,7 @@ const getBusTripsById = async (req, res) => {
 
 const getBusTripsByBusId = async (req, res) => {
   try {
-    const busTrips = await BusTripService.getBusTripsByBusId(req.params.id);
+    const busTrips = await busTripService.getBusTripsByBusId(req.params.busId);
     return res.status(statusCodes.OK).json({
       data: busTrips,
       success: true,
@@ -123,8 +132,10 @@ const getBusTripsByBusId = async (req, res) => {
 
 const getActiveBusTripsByDepartureCityIdAndArrivalCityId = async (req, res) => {
   try {
+    console.log(req.params.departureCityId);
+    console.log(req.params.arrivalCityId);
     const busTrips =
-      await BusTripService.getActiveBusTripsByDepartureCityIdAndArrivalCityId(
+      await busTripService.getActiveBusTripsByDepartureCityIdAndArrivalCityId(
         req.params.departureCityId,
         req.params.arrivalCityId
       );

@@ -1,11 +1,12 @@
 const { BusTripRepository } = require("../repository/index.js");
 
 class BusTripService {
-  contructor() {
+  constructor() {
     this.busTripRepository = new BusTripRepository();
   }
   async createBusTrip(busTripData) {
     try {
+      // console.log(busTripData);
       const busTrip = await this.busTripRepository.createBusTrip(busTripData);
       return busTrip;
     } catch (error) {
@@ -59,7 +60,7 @@ class BusTripService {
     }
   }
 
-  async getBusTripById(busTripId) {
+  async getBusTripsById(busTripId) {
     try {
       const busTrip = await this.busTripRepository.getBusTripById(busTripId);
       return busTrip;
@@ -74,6 +75,7 @@ class BusTripService {
 
   async getBusTripsByBusId(busId) {
     try {
+      console.log(busId);
       const busTrips = await this.busTripRepository.getBusTripsByBusId(busId);
       return busTrips;
     } catch (error) {

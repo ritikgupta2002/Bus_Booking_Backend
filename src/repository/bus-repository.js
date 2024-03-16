@@ -1,11 +1,12 @@
 const { Bus } = require("../models/index.js");
-const { BusTrip } = require("./models/busTrip");
+const { BusTrip } = require("../models/index.js");
 const { Op } = require("sequelize");
 
 class BusRepository {
   // Create a new bus
   async createBus(busData) {
     try {
+      console.log(busData);
       const bus = await Bus.create({
         name: busData.name,
         type: busData.type,
@@ -52,20 +53,25 @@ class BusRepository {
       if (!bus) {
         throw new Error("Bus not found");
       }
-      if (
-        data.name ||
-        data.type ||
-        data.totalSeats ||
-        data.operator ||
-        bus.stationId
-      ) {
+
+      if (data.name) {
         bus.name = data.name;
-        bus.type = data.type;
-        bus.totalSeats = data.totalSeats;
-        bus.operator = data.operator;
-        bus.stationId = data.stationId;
-        await bus.save();
       }
+      if (data.type) {
+        bus.type = data.type;
+      }
+      if (data.totalSeats) {
+        bus.totalSeats = data.totalSeats;
+      }
+      if (data.operator) {
+        bus.operator = data.operator;
+      }
+      if (data.stationId) {
+        bus.stationId = data.stationId;
+      }
+
+      await bus.save();
+
       return bus;
     } catch (error) {
       // Log an error message
@@ -93,9 +99,10 @@ class BusRepository {
   }
   async getBusesByBusStation(busStationId) {
     try {
+      console.log(busStationId);
       const buses = await Bus.findAll({
         where: {
-          busStationId: busStationId,
+          StationId: busStationId,
         },
       });
       if (!buses || buses.length === 0) {
@@ -112,11 +119,13 @@ class BusRepository {
   }
   async getBusesByType(BusType) {
     try {
+      console.log(BusType);
       const buses = await Bus.findAll({
         where: {
           type: BusType,
         },
       });
+      console.log(buses);
       if (!buses || buses.length === 0) {
         throw new Error("No buses found for the specified bus type");
       }
@@ -129,22 +138,41 @@ class BusRepository {
       throw new Error("Failed to get buses by bus type");
     }
   }
-  // this function will be usefull when there will be many to many relationship between bustrips and bus model
-  // async getAllBusesForBusTrip(busTripId) {
-  //    try {
-  //     const busTrip=await BusTrip.findByPk(busTripId,{
-  //       include:'buses'//including the associated model
-  //     });
-  //     if (!busTrip) {
-  //       throw new Error('BusTrip not found');
-  //     }
-  //     const buses= busTrip.buses;
-  //     return buses;
 
-  //    } catch (error) {
+  async getAllBuses(filter) {
+    try {
+      // Check if there are any filters provided
+      if (Object.keys(filter).length !== 0) {
+        // Build the query based on the provided filters
+        const whereClause = {};
+        if (filter.name) {
+          whereClause.name = { [Op.startsWith]: filter.name };
+        }
+        if (filter.type) {
+          whereClause.type = filter.type;
+        }
+        if (filter.operator) {
+          whereClause.operator = { [Op.startsWith]: filter.operator };
+        }
+        if (filter.stationId) {
+          whereClause.stationId = filter.stationId;
+        }
+        const buses = await Bus.findAll({ where: whereClause });
 
-  //    }
-  // }
+        if (buses.length === 0) {
+          throw new Error("No buses found matching the provided filters");
+        }
+
+        return buses;
+      } else {
+        // If no filters provided, return all buses
+        const buses = await Bus.findAll();
+        return buses;
+      }
+    } catch (error) {
+      throw new Error("Failed to get buses: " + error.message);
+    }
+  }
 }
 
 module.exports = BusRepository;

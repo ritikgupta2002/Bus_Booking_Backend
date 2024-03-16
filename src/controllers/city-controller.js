@@ -1,5 +1,5 @@
 const { CityService } = require("../services/index.js");
-const statusCodes=require("./statusCodes.js");
+const statusCodes = require("./statusCodes.js");
 
 const cityService = new CityService();
 
@@ -26,6 +26,14 @@ const create = async (req, res) => {
 const destroy = async (req, res) => {
   try {
     const response = await cityService.deleteCity(req.params.id);
+    if (response === false) {
+      return res.status(statusCodes.NOT_FOUND).json({
+        data: {},
+        success: false,
+        message: "City not found for deletion",
+        err: {},
+      });
+    }
     return res.status(statusCodes.OK).json({
       data: response,
       success: true,
@@ -41,7 +49,6 @@ const destroy = async (req, res) => {
     });
   }
 };
-
 const get = async (req, res) => {
   try {
     const response = await cityService.getCity(req.params.id);
@@ -83,9 +90,9 @@ const update = async (req, res) => {
 const getAll = async (req, res) => {
   try {
     const filter = {
-        name: req.query.name,
-        // Add more allowed parameters as needed
-      };
+      name: req.query.name,
+      // Add more allowed parameters as needed
+    };
     const cities = await cityService.getAllCities(filter);
     return res.status(statusCodes.OK).json({
       data: cities,

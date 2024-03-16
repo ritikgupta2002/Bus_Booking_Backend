@@ -1,14 +1,16 @@
 const { BusStationRepository } = require("../repository/index.js");
 
 class BusStationService {
-  contructor() {
+  constructor() {
     this.busStationRepository = new BusStationRepository();
   }
   async createBusStation(stationData) {
     try {
+      // console.log(stationData);
       const station = await this.busStationRepository.createBusStation(
         stationData
       );
+      // console.log(station);
       return station;
     } catch (error) {
       // Log an error message
@@ -63,9 +65,9 @@ class BusStationService {
     }
   }
 
-  async getAllBusStation(filter) {
+  async getAllBusStations(filter) {
     try {
-      const stations = await this.busStationRepository.getAllBusStation(filter);
+      const stations = await this.busStationRepository.getAllBusStations(filter);
       return stations;
     } catch (error) {
       // Log an error message
@@ -78,6 +80,7 @@ class BusStationService {
 
   async getBusStationsByCity(cityId) {
     try {
+      // console.log(cityId);
       const stations = await this.busStationRepository.getBusStationsByCity(
         cityId
       );

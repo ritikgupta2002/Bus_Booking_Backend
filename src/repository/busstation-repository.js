@@ -1,9 +1,11 @@
 const { BusStation } = require("../models/index.js");
+const {City} = require("../models/index.js");
 const { Op } = require("sequelize");
 
 class BusStationRepository {
   // Create a new bus station
   async createBusStation(stationData) {
+    console.log(stationData);
     try {
       const busStation = await BusStation.create({
         name: stationData.name,
@@ -50,7 +52,7 @@ class BusStationRepository {
       if (!busStation) {
         throw new Error("Bus station not found");
       }
-      if (data.name||data.address||data.cityId) {
+      if (data.name || data.address || data.cityId) {
         busStation.name = data.name;
         busStation.address = data.address;
         busStation.cityId = data.cityId;
@@ -83,9 +85,10 @@ class BusStationRepository {
     }
   }
 
-  async getAllBusStation(filter) {
+  async getAllBusStations(filter) {
     try {
       // Check if there is a name filter
+      console.log(filter);
       if (filter && filter.name) {
         const busStations = await BusStation.findAll({
           where: {
@@ -97,7 +100,7 @@ class BusStationRepository {
         return busStations;
       }
       // If no filter, get all busStations
-      const busStations = await busStations.findAll();
+      const busStations = await BusStation.findAll();
       return busStations;
     } catch (error) {
       // Log an error message
@@ -111,11 +114,17 @@ class BusStationRepository {
   // Get busStations by city Id
   async getBusStationsByCity(cityId) {
     try {
+      // console.log(cityId);
       const busStations = await BusStation.findAll({
         where: {
           cityId: cityId,
         },
       });
+      for (const busStation of busStations) {
+        const city = await City.findByPk(cityId);
+        busStation.dataValues.city = city; // Attach city data to bus station
+      }
+      // console.log(busStations);
       const stationCount = busStations.length;
       return { busStations, stationCount };
     } catch (error) {
@@ -126,10 +135,6 @@ class BusStationRepository {
       throw new Error("Failed to get bus stations by cityId");
     }
   }
-
-  
 }
-
-
 
 module.exports = BusStationRepository;

@@ -27,7 +27,16 @@ const destroy = async (req, res) => {
   try {
     const stationId = req.params.id;
     const response = await busStationService.deleteBusStation(stationId);
-    res.status(statusCodes.OK).json({
+
+    if (response === false) {
+      return res.status(statusCodes.NOT_FOUND).json({
+        data: {},
+        success: false,
+        message: "Bus station not found for deletion",
+        err: {},
+      });
+    }
+    return res.status(statusCodes.OK).json({
       data: response,
       success: true,
       message: "Successfully deleted bus station",
@@ -84,10 +93,10 @@ const get = async (req, res) => {
   }
 };
 
-const getAllBusStation = async (req, res) => {
+const getAllBusStations = async (req, res) => {
   try {
     const filter = req.query; // Assuming any filter parameters are sent as query parameters
-    const stations = await busStationService.getAllBusStation(filter);
+    const stations = await busStationService.getAllBusStations(filter);
     res.status(statusCodes.OK).json({
       data: stations,
       success: true,
@@ -104,10 +113,12 @@ const getAllBusStation = async (req, res) => {
   }
 };
 
-const getBusStationByCity = async (req, res) => {
+const getBusStationsByCity = async (req, res) => {
   try {
-    const cityId = req.params.cityId; // Assuming city ID is sent as a URL parameter
-    const stations = await busStationService.getBusStationsByCity(cityId);
+    // console.log(req.params.cityId);
+    const stations = await busStationService.getBusStationsByCity(
+      req.params.cityId
+    );
     res.status(statusCodes.OK).json({
       data: stations,
       success: true,
@@ -129,6 +140,6 @@ module.exports = {
   destroy,
   update,
   get,
-  getAllBusStation,
-  getBusStationByCity,
+  getAllBusStations,
+  getBusStationsByCity,
 };
