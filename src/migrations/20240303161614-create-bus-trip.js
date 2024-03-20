@@ -59,12 +59,22 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      viaRoutes: {
+        type: Sequelize.TEXT,
+        allowNull: true,
+        defaultValue: '[]',
+      },
+      viaStops: {
+        type: Sequelize.TEXT, 
+        allowNull: true,
+        defaultValue: '[]', 
+      },      
       ticketPrice: {
         type: Sequelize.FLOAT,
         allowNull: false,
       },
       status: {
-        type: Sequelize.ENUM("Active", "Inactive","No Information"),
+        type: Sequelize.ENUM("Active", "Inactive", "No Information"),
         defaultValue: "No Information",
       },
       createdAt: {

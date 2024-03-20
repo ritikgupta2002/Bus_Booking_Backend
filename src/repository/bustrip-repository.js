@@ -15,6 +15,8 @@ class BusTripRepository {
         departureDateTime: busTripData.departureDateTime,
         arrivalDateTime: busTripData.arrivalDateTime,
         availableSeats: busTripData.availableSeats,
+        viaRoutes: busTripData.viaRoutes,//stors city ids 
+        viaStops: busTripData.viaStops,//stores station ids
         ticketPrice: busTripData.ticketPrice,
         status: busTripData.status,
       });
@@ -68,7 +70,8 @@ class BusTripRepository {
         data.status||
         data.availableSeats||
         data.departureDateTime||
-        data.arrivalDateTime
+        data.arrivalDateTime||
+        data.viaRoutes||data.viaStops
       ) {
         if (data.departureStationId) busTrip.departureStationId = data.departureStationId;
         if (data.arrivalStationId) busTrip.arrivalStationId = data.arrivalStationId;
@@ -77,6 +80,8 @@ class BusTripRepository {
         if (data.availableSeats) busTrip.availableSeats = data.availableSeats;
         if (data.departureDateTime) busTrip.departureDateTime = data.departureDateTime;
         if (data.arrivalDateTime) busTrip.arrivalDateTime = data.arrivalDateTime;
+        if(data.viaRoutes) busTrip.viaRoutes = data.viaRoutes;
+        if(data.viaStops) busTrip.viaStops = data.viaStops;
         await busTrip.save();
       }
     } catch (error) {

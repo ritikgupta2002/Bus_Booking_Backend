@@ -1,3 +1,4 @@
+const { response } = require("express");
 const { BusTripService } = require("../services/index.js");
 const statusCodes = require("./statusCodes.js");
 
@@ -7,8 +8,25 @@ const create = async (req, res) => {
   try {
     // console.log(req.body);
     const busTrip = await busTripService.createBusTrip(req.body);
+    const responseData = {
+      id: busTrip.id,
+      busId: busTrip.busId,
+      departureStationId: busTrip.departureStationId,
+      arrivalStationId: busTrip.arrivalStationId,
+      departureCityId: busTrip.departureCityId,
+      arrivalCityId: busTrip.arrivalCityId,
+      departureDateTime: busTrip.departureDateTime,
+      arrivalDateTime: busTrip.arrivalDateTime,
+      availableSeats: busTrip.availableSeats,
+      viaRoutes: busTrip.viaRoutes,
+      viaStops: busTrip.viaStops,
+      ticketPrice: busTrip.ticketPrice,
+      status: busTrip.status,
+      updatedAt: busTrip.updatedAt,
+      createdAt: busTrip.createdAt,
+    };
     return res.status(statusCodes.CREATED).json({
-      data: busTrip,
+      data: responseData,
       success: true,
       message: "Successfully created bus trip",
       err: {},
@@ -57,6 +75,7 @@ const update = async (req, res) => {
       req.body
     );
     return res.status(statusCodes.OK).json({
+      
       data: response,
       success: true,
       message: "Successfully updated bus trip",
@@ -94,9 +113,26 @@ const getAll = async (req, res) => {
 
 const getBusTripsById = async (req, res) => {
   try {
-    const busTrips = await busTripService.getBusTripsById(req.params.id);
+    const busTrip = await busTripService.getBusTripsById(req.params.id);
+    const responseData = {
+      id: busTrip.id,
+      busId: busTrip.busId,
+      departureStationId: busTrip.departureStationId,
+      arrivalStationId: busTrip.arrivalStationId,
+      departureCityId: busTrip.departureCityId,
+      arrivalCityId: busTrip.arrivalCityId,
+      departureDateTime: busTrip.departureDateTime,
+      arrivalDateTime: busTrip.arrivalDateTime,
+      availableSeats: busTrip.availableSeats,
+      viaRoutes: busTrip.viaRoutes,
+      viaStops: busTrip.viaStops,
+      ticketPrice: busTrip.ticketPrice,
+      status: busTrip.status,
+      updatedAt: busTrip.updatedAt,
+      createdAt: busTrip.createdAt,
+    };
     return res.status(statusCodes.OK).json({
-      data: busTrips,
+      data: responseData,
       success: true,
       message: "Successfully fetched bus trips with the given bus id",
       err: {},
@@ -124,7 +160,7 @@ const getBusTripsByBusId = async (req, res) => {
     return res.status(statusCodes.INTERNAL_SERVER_ERROR).json({
       data: {},
       success: false,
-      message: "Not able to fetch bus trips with the given bus id",
+      message: "Not able to fetch bus trips with the gis ven buid",
       err: error,
     });
   }

@@ -100,7 +100,7 @@ execute
   }
 
 ```
-![db diagram](https://github.com/ritikgupta2002/Bus_Search_Service/assets/99651822/5111f2a6-3285-4307-987b-db2c6c661e75)
+![dbml diagram](https://github.com/ritikgupta2002/Bus_Search_Service/assets/99651822/e54aed04-324d-40d4-88ae-a2d66388ed77)
 
 
 ## Model Relationships:
@@ -113,6 +113,7 @@ execute
 6. Each `BusTrip` references a specific `Bus` (many-to-one relationship).
 7. Each `BusTrip` has an arrival `City` (many-to-one relationship).
 8. Each `BusTrip` has an arrival `BusStation` (many-to-one relationship).
+
 
 
 

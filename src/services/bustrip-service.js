@@ -8,6 +8,7 @@ class BusTripService {
     try {
       // console.log(busTripData);
       const busTrip = await this.busTripRepository.createBusTrip(busTripData);
+      
       return busTrip;
     } catch (error) {
       // Log an error message
