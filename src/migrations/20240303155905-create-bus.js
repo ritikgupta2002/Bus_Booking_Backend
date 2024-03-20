@@ -10,17 +10,20 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull:false
       },
       type: {
         type: Sequelize.ENUM("AC", "Regular","Sleeper","Deluxe"),
         defaultValue: "Regular",
       },
       totalSeats: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       operator: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull:false
       },
       stationId: {
        type:Sequelize.INTEGER,

@@ -44,6 +44,7 @@ execute
   "attributes": {
     "BusID": "Primary Key",
     "BusName": "String",
+    "RegistrationNumber":"String",
     "BusType": "String",
     "TotalSeats": "Integer",
     "Operator": "String",
@@ -67,6 +68,8 @@ execute
       "DepartureDateTime": "Date",
       "ArrivalDateTime": "Date",
       "AvailableSeats": "Integer",
+      "ViaRoutes":"Array",
+      "ViaStops":"Array",
       "TicketPrice": "Float",
       "Status": "String (e.g., Active, Inactive)"
     }
@@ -100,8 +103,7 @@ execute
   }
 
 ```
-![dbml diagram](https://github.com/ritikgupta2002/Bus_Search_Service/assets/99651822/e54aed04-324d-40d4-88ae-a2d66388ed77)
-
+![dbml diagram](https://github.com/ritikgupta2002/Bus_Search_Service/assets/99651822/b4b5b5f4-4f1a-4bbb-950a-7daf7497f640)
 
 ## Model Relationships:
 
