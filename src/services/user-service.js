@@ -46,8 +46,8 @@ class UserService {
       const user = await this.userRepository.getById(response.id);
       //because jwt.verify returns the same payload which is used to create a token so we
       // know that we have used id and email to create a payload for token creation hence we can use response.id
-      if(!user){
-        throw{error:"No user with the corresponding token exists"};
+      if (!user) {
+        throw { error: "No user with the corresponding token exists" };
       }
       return user.id;
     } catch (error) {
@@ -81,6 +81,15 @@ class UserService {
       return bcrypt.compareSync(userInputPlainPassword, encryptedPassword);
     } catch (error) {
       console.log("something went wrong in password comparison");
+      throw error;
+    }
+  }
+
+  isAdmin(userId) {
+    try {
+      return this.userRepository.isAdmin(userId);
+    } catch (error) {
+      console.log("Something went wrong in service layer");
       throw error;
     }
   }
