@@ -16,8 +16,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   Role.init(
     {
-      name: DataTypes.STRING,
-      allowNull: false,
+      name:{
+       type:DataTypes.STRING,
+       allowNull:false
+      } 
     },
     {
       sequelize,

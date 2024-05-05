@@ -96,7 +96,7 @@ const isAdmin = async (req, res) => {
   try {
     const response = await userService.isAdmin(req.body.id);
     return res.status(200).json({
-      data: response,
+      data: `user is admin-${response}`,
       err: {},
       success: true,
       message: "Successfully fetched whether user is admin ",
