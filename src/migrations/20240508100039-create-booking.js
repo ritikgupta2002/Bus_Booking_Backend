@@ -10,19 +10,27 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       busId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull:false,
       },
       userId: {
-        type: Sequelize.INTEGER
-      },
+        type: Sequelize.INTEGER,
+        allowNull:false,
+      },  
       status: {
-        type: Sequelize.ENUM
+        type: Sequelize.ENUM,
+        allowNull:false,
+        values:["InProcess","Booked","Canceled"],
+        defaultValue:"InProcess"
       },
       noOfSeats: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull:false,
       },
       totalCost: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull:false
+
       },
       createdAt: {
         allowNull: false,
