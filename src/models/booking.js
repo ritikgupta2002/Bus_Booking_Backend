@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Booking.init(
     {
-      busId: { type: DataTypes.INTEGER, allowNull: false },
+      busTripId: { type: DataTypes.INTEGER, allowNull: false },
       userId: { type: DataTypes.INTEGER, allowNull: false },
       status: {
         type: DataTypes.ENUM,
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       noOfSeats: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: false,
+        defaultValue:0,
       },
       totalCost: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
     },
