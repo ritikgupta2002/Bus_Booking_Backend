@@ -6,5 +6,9 @@ const bookingController= new BookingController();
 const router = express.Router();
  
 router.post("/bookings",bookingController.create);
+router.patch("/bookings/:bookingId",bookingController.updateSeats);
+router.get("/bookings/:bookingId",bookingController.getBookingById);
+router.get("/bookings",bookingController.getAllBookings);
+router.delete("/bookings/:bookingId",bookingController.cancelBooking);
 
 module.exports = router;
