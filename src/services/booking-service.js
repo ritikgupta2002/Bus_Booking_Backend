@@ -64,7 +64,13 @@ class BookingService {
           StatusCodes.BAD_REQUEST
         );
       }
+      // check if the booking is already canceled 
 
+      if(booking.status==="Canceled"){
+        throw error;
+      }
+
+      // console.log(booking.status);
       const busTripId = booking.busTripId;
       let getbusTripRequestURL = `${BUS_SEARCH_SERVICE_PATH}/api/v1/bustrip/${busTripId}`;
       const response = await axios.get(getbusTripRequestURL);
@@ -80,9 +86,7 @@ class BookingService {
       }
 
       // if user want to update the no of seats
-      // console.log(typeof data.noOfSeats, typeof booking.noOfSeats);
-        //  data.noOfSeats=Number(data.noOfSeats);
-         console.log(typeof data.noOfSeats);
+        //  console.log(typeof data.noOfSeats);
       if (data.noOfSeats && booking.noOfSeats !== data.noOfSeats) {
         if (data.noOfSeats < booking.noOfSeats) {
           const updateBusTripRequestURL = `${BUS_SEARCH_SERVICE_PATH}/api/v1/bustrip/${busTripId}`;
@@ -116,11 +120,11 @@ class BookingService {
         return updatedBooking;
       }
     } catch (error) {
-      throw new ServiceError(
-        "Something went wrong in the booking process",
-        "There was some issue updating the booking , please try again later",
-        StatusCodes.INTERNAL_SERVER_ERROR
-      );
+        throw new ServiceError(
+          "Something went wrong in the booking process",
+          "There was some issue updating the booking, please try again later",
+          StatusCodes.INTERNAL_SERVER_ERROR
+        );
     }
   }
 
