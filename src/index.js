@@ -4,19 +4,19 @@ const bodyParser = require("body-parser");
 
 const { PORT } = require("./config/serverConfig");
 
-const {sendBasicEmail} = require("./services/email-service");
+const jobs = require("./utils/job");
+
+const TicketController=require("./controllers/ticket-controller");
 
 const setupAndStartServer = async () => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
+
+  app.post("/api/v1/tickets",TicketController.create);
+  jobs();
+
   app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
-   sendBasicEmail(
-      "support@admin.com",
-      "reminderservice2002@gmail.com",
-      "testing mail ",
-      "this is a testing mail "
-    );
   });
 };
 
