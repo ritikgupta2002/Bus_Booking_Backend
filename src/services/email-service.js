@@ -54,12 +54,7 @@ const subscribeEvents = async (payload) => {
       await createNotification(data);
       break;
     case "SEND_BASIC_MAIL":
-      await sendBasicEmail(
-        data.mailFrom,
-        data.mailTo,
-        data.mailSubject,
-        data.mailBody
-      );
+      await sendBasicEmail(data);
       break;
     default:
       console.log("No valid event received");
