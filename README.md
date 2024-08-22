@@ -1,3 +1,5 @@
+## API Gateway 
+
 Frontend - MiddleEnd - BackEnd
 
 - We need an intermediate layer between client side and the microservices
