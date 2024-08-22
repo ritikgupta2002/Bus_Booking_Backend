@@ -9,3 +9,10 @@ Frontend - MiddleEnd - BackEnd
 - We try to prepare an API Gateway that acts as this middle end.
 
 
+## Link to different Services
+
+1. [Bus Booking Service ](https://github.com/ritikgupta2002/Bus_Booking_Service)
+2. [Bus Search Service ](https://github.com/ritikgupta2002/Bus_Search_Service)
+3. [Authentication Service ](https://github.com/ritikgupta2002/Bus_Auth_Service)
+4. [Reminder Service ](https://github.com/ritikgupta2002/Bus_Reminder_Service)
+
