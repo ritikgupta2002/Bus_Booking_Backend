@@ -134,14 +134,14 @@ const getBusTripsById = async (req, res) => {
     return res.status(statusCodes.OK).json({
       data: responseData,
       success: true,
-      message: "Successfully fetched bus trips with the given bus id",
+      message: "Successfully fetched bus trips with the provided busTrip id",
       err: {},
     });
   } catch (error) {
     return res.status(statusCodes.INTERNAL_SERVER_ERROR).json({
       data: {},
       success: false,
-      message: "Not able to fetch bus trips with the given bus id",
+      message: "Not able to fetch bus trips with the provided busTrip id",
       err: error,
     });
   }
